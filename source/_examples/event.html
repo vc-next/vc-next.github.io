@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>事件处理</title>
+  </head>
+  <body>
+    <section class="module event">
+      <button type="button" name="button">点击</button>
+      <script type="text/javascript">
+        const btn = document.querySelector("button[name=button]")
+        btn.addEventListener('click', e => {
+          console.log(e.timeStamp)
+        }, false)
+      </script>
+    </section>
+    <section class="module input">
+      <input type="input" name="input" placeholder="用户名" autocomplete="off"></input>
+    </section>
+  </body>
+</html>
