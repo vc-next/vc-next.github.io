@@ -4,11 +4,11 @@
 
 # Site
 title: Hexo
-subtitle: ''
+subtitle: 'javascript lecture'
 description: ''
-keywords:
-author: John Doe
-language: en
+keywords: javascript css html
+author: vc-next
+language: zh-CN en
 timezone: ''
 
 # URL
@@ -28,6 +28,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
+# i18n_dir: :languages
 skip_render:
 
 # Writing
@@ -100,12 +101,16 @@ ignore:
 # theme: landscape
 theme: cactus
 
-showcase:
-  dir: _examples
+
+
+posts_overview:
+  show_all_posts: true
 
 theme_config:
   colorscheme: classic
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  repo: git@github.com:vc-next/vc-next.github.io.git
+  branch: main

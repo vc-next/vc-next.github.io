@@ -1,32 +1,38 @@
 lockfileVersion: 5.3
 
 specifiers:
-  hexo: ^5.0.0
+  hexo: ^6.0.0
+  hexo-deployer-git: ^3.0.0
   hexo-generator-archive: ^1.0.0
   hexo-generator-category: ^1.0.0
   hexo-generator-index: ^2.0.0
+  hexo-generator-search: ^2.4.3
   hexo-generator-tag: ^1.0.0
-  hexo-plugin-showcase: ^1.0.0
+  hexo-plugin-showcase: ^1.0.1
   hexo-renderer-ejs: ^1.0.0
   hexo-renderer-marked: ^4.0.0
   hexo-renderer-stylus: ^2.0.0
   hexo-server: ^2.0.0
   hexo-theme-landscape: ^0.0.3
   hexo-uuid: ^1.0.2
+  utils-merge: ^1.0.1
 
 dependencies:
-  hexo: 5.4.1
+  hexo: 6.0.0
+  hexo-deployer-git: 3.0.0
   hexo-generator-archive: 1.0.0
   hexo-generator-category: 1.0.0
   hexo-generator-index: 2.0.0
+  hexo-generator-search: 2.4.3
   hexo-generator-tag: 1.0.0
-  hexo-plugin-showcase: 1.0.0
+  hexo-plugin-showcase: 1.0.1
   hexo-renderer-ejs: 1.0.0
   hexo-renderer-marked: 4.1.0
   hexo-renderer-stylus: 2.0.1
   hexo-server: 2.0.0
   hexo-theme-landscape: 0.0.3
   hexo-uuid: 1.0.2
+  utils-merge: 1.0.1
 
 packages:
 
@@ -662,6 +668,20 @@ packages:
       tildify: 2.0.0
     dev: false
 
+  /hexo-deployer-git/3.0.0:
+    resolution: {integrity: sha512-U2Xewjab+rvUDNTcuYYnOxitkDXL3f5VMUH32jKDHs3OC4YFVGRoEaTTDVHskqr3KRi78Wohjc6BSRHOoG3oxA==}
+    engines: {node: '>=8.6.0'}
+    dependencies:
+      bluebird: 3.7.2
+      chalk: 4.1.2
+      hexo-fs: 3.1.0
+      hexo-util: 2.6.0
+      moment: 2.29.1
+      nunjucks: 3.2.3
+    transitivePeerDependencies:
+      - chokidar
+    dev: false
+
   /hexo-front-matter/2.0.0:
     resolution: {integrity: sha512-IR3tjAyK2Ga/0a/WDAoNy5+n3ju2/mkuAsCDEeGgGLf5+7kkiOkkG/FrnueuYgz0h2MPfWDLBiDsSTCmB0sLCA==}
     engines: {node: '>=10.13.0'}
@@ -701,6 +721,16 @@ packages:
       timsort: 0.3.0
     dev: false
 
+  /hexo-generator-search/2.4.3:
+    resolution: {integrity: sha512-Z5hfZq2g3np/Tgdp2q9HobfIvU6Pdz89tnTurc1IIq/vW0MHgDynk0Aiv6kvMtKWthnZ5l0iEMT3YLN35NdYwQ==}
+    engines: {node: '>= 0.10.0'}
+    dependencies:
+      nunjucks: 3.2.3
+      utils-merge: 1.0.1
+    transitivePeerDependencies:
+      - chokidar
+    dev: false
+
   /hexo-generator-tag/1.0.0:
     resolution: {integrity: sha512-JDoB2T1EncRlyGSjuAhkGxRfKkN8tq0i8tFlk9I4q2L6iYxPaUnFenhji0oxufTADC16/IchuPjmMk//dt8Msg==}
     engines: {node: '>=8.6.0'}
@@ -734,8 +764,8 @@ packages:
     engines: {node: '>=8.6.0'}
     dev: false
 
-  /hexo-plugin-showcase/1.0.0:
-    resolution: {integrity: sha512-l8gJEVRi4ZkeSsYjSGBnrrI972K0RYEyAlYKTjHJwrchRV/22UwT9cqmXdaGQfzmxMZs7UQrSPDKh4a3/hXyMQ==}
+  /hexo-plugin-showcase/1.0.1:
+    resolution: {integrity: sha512-exMIUOv1E0/Wg1YBepldNjJDYcjf4Pa6XWc41BLqkNtUUH1+djTixT4YUHdofJhhpBoBq7MSGoBja1A9dCmaKw==}
     dependencies:
       cheerio: 1.0.0-rc.10
       hexo: 6.0.0
@@ -812,38 +842,6 @@ packages:
     resolution: {integrity: sha512-HNxDyBip0Mtqxy/OPCDlIzHzCItDExShw9Ei4vDk2557x6MexiGmVZpusPagtnpp0C1+BhfRHZlCh2bbjAQ5MQ==}
     dependencies:
       uuid: 2.0.3
-    dev: false
-
-  /hexo/5.4.1:
-    resolution: {integrity: sha512-20tyZB8TfaddneySZZ40mGFsN/V9nlolToUnA2KhRVl1wl6uWT10mnziVjLMhQfaYddqCwD36NvOamGS3DOLhQ==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
-    dependencies:
-      abbrev: 1.1.1
-      archy: 1.0.0
-      bluebird: 3.7.2
-      chalk: 4.1.2
-      hexo-cli: 4.3.0
-      hexo-front-matter: 2.0.0
-      hexo-fs: 3.1.0
-      hexo-i18n: 1.0.0
-      hexo-log: 2.0.0
-      hexo-util: 2.6.0
-      js-yaml: 4.1.0
-      js-yaml-js-types: 1.0.0
-      micromatch: 4.0.4
-      moment: 2.29.1
-      moment-timezone: 0.5.34
-      nunjucks: 3.2.3
-      pretty-hrtime: 1.0.3
-      resolve: 1.22.0
-      strip-ansi: 6.0.1
-      text-table: 0.2.0
-      tildify: 2.0.0
-      titlecase: 1.1.3
-      warehouse: 4.0.0
-    transitivePeerDependencies:
-      - chokidar
     dev: false
 
   /hexo/6.0.0:
@@ -1012,12 +1010,6 @@ packages:
 
   /isexe/2.0.0:
     resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
-    dev: false
-
-  /js-yaml-js-types/1.0.0:
-    resolution: {integrity: sha512-UNjPwuoaj4mcHkJCJSF6l4MgkzoFjG+JJkBXMYNvjgO3yE9gTeRt+E6PN022vduz/daZZ7HmlEiSEE36NrGE4w==}
-    dependencies:
-      esprima: 4.0.1
     dev: false
 
   /js-yaml/3.14.1:
