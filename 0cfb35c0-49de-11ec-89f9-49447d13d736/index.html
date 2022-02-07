@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="导读  !!! note “按语”    数据类型是JavaScript核心的基础知识点，碎片文章比较多但不够全面，关于一些疑难点也并无总结，对于新同学上手而言往往是云里雾里。本文全面剖析且言简意赅，希望读者喜欢。 为什么学习编程语言的数据类型？我们知道计算机程序&#x3D;算法+数据结构，数据结构是指相互之间存在一种或多种特定关系的数据元素的集合。数据类型就是数据元素的一种组织形式，学习和理解数据类型对我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据类型">
+<meta property="og:url" content="http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="导读  !!! note “按语”    数据类型是JavaScript核心的基础知识点，碎片文章比较多但不够全面，关于一些疑难点也并无总结，对于新同学上手而言往往是云里雾里。本文全面剖析且言简意赅，希望读者喜欢。 为什么学习编程语言的数据类型？我们知道计算机程序&#x3D;算法+数据结构，数据结构是指相互之间存在一种或多种特定关系的数据元素的集合。数据类型就是数据元素的一种组织形式，学习和理解数据类型对我">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-11-20T08:33:35.000Z">
+<meta property="article:modified_time" content="2022-02-04T09:29:37.588Z">
+<meta property="article:author" content="vc-next">
+<meta property="article:tag" content="基础知识">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>数据类型</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/b2523790-4ac8-11ec-a561-1f759942c09b/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&text=数据类型"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&title=数据类型"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&is_video=false&description=数据类型"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=数据类型&body=Check out this article: http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&title=数据类型"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&title=数据类型"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&title=数据类型"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&title=数据类型"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&name=数据类型&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&t=数据类型"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%BC%E8%AF%BB"><span class="toc-number">1.</span> <span class="toc-text">导读</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">为什么学习编程语言的数据类型？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript-%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">JavaScript 的数据类型有哪些？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%A8%E5%88%AB%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B"><span class="toc-number"></span> <span class="toc-text">辨别不同的对象类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%B8%B8%E8%A7%81%E7%9A%84%E8%80%83%E6%9F%A5%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">数据类型常见的考查方式有哪些？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">如何深入理解数据类型转换？</span></a>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        数据类型
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">vc-next</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-11-20T08:33:35.000Z" itemprop="datePublished">2021-11-20</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h4><!-- toc -->
+
+<p>!!! note “按语”<br>    数据类型是JavaScript核心的基础知识点，碎片文章比较多但不够全面，关于一些疑难点也并无总结，对于新同学上手而言往往是云里雾里。本文全面剖析且言简意赅，希望读者喜欢。</p>
+<h3 id="为什么学习编程语言的数据类型？"><a href="#为什么学习编程语言的数据类型？" class="headerlink" title="为什么学习编程语言的数据类型？"></a>为什么学习编程语言的数据类型？</h3><p>我们知道计算机程序=算法+数据结构，数据结构是指相互之间存在一种或多种特定关系的数据元素的集合。数据类型就是数据元素的一种组织形式，学习和理解数据类型对我们编写高质量的程序至关重要。</p>
+<h3 id="JavaScript-的数据类型有哪些？"><a href="#JavaScript-的数据类型有哪些？" class="headerlink" title="JavaScript 的数据类型有哪些？"></a>JavaScript 的数据类型有哪些？</h3><p>最新的 ECMAScript 标准定义了 8 种数据类型: <strong>undefined</strong>、 <strong>boolean</strong>、 <strong>number</strong>、 <strong>string</strong>、 <strong>bingint</strong>、 <strong>symbol</strong>、 <strong>null</strong>、 <strong>object</strong>，其中除了 object 之外都是基本数据类型。</p>
+<p>如果想判断变量的数据类型，可以借助 JavaScript 语法提供的 <strong>typeof</strong> 关键字。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span> === <span class="string">&#x27;undefined&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span> ===<span class="string">&#x27;boolean&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="number">2021</span> === <span class="string">&#x27;number&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">&#x27;hello&#x27;</span> === <span class="string">&#x27;string&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="title class_">BigInt</span>(<span class="number">1</span>) === <span class="string">&#x27;bigint&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="title class_">Symbol</span>(<span class="number">2</span>) === <span class="string">&#x27;symbol&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span> === <span class="string">&#x27;object&#x27;</span>            <span class="comment">// 注意是 object 而不是 null</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;&#125; === <span class="string">&#x27;object&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;&#125; === <span class="string">&#x27;function&#x27;</span>  <span class="comment">// 注意是 function 而不是 object</span></span><br></pre></td></tr></table></figure>
+
+<p>细心的同学不难发现上述代码的运行结果有两个“疑点”：</p>
+<ol>
+<li> null 的数据类型竟然不是 null 而是 object :question:</li>
+<li> 按照 ECMAScript 定义的数据类型并不包括 function 而 typeof 竟然返回了 function :question:</li>
+</ol>
+<p>我们来看下第一个问题，<a target="_blank" rel="noopener" href="https://tc39.es/ecma262/#sec-terms-and-definitions-null-type">官方</a>是这么定义的：</p>
+<blockquote>
+<p>4.4.16 Null type<br>type whose sole value is the null value</p>
+</blockquote>
+<p>这句话的意思一个被赋值 null 的变量的数据类型是 null，用代码表示就是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="literal">null</span></span><br><span class="line"><span class="keyword">typeof</span> a === <span class="string">&#x27;null&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>但实际上是运行结果如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="literal">null</span></span><br><span class="line"><span class="keyword">typeof</span> a === <span class="string">&#x27;undefined&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>换句话说 null 是理论上的基本数据类型之一，但在实际中并未被执行，多个文章都将其描述为“<a target="_blank" rel="noopener" href="https://2ality.com/2013/10/typeof-null.html">历史原因</a>”所致，有兴趣可以自行阅读。如果没有时间阅读也可以参考 MDN 的描述：</p>
+<blockquote>
+<p>在 JavaScript 最初的实现中，JavaScript 中的值是由一个表示类型的标签和实际数据值表示的。对象的类型标签是 0。由于 null 代表的是空指针（大多数平台下值为 0x00），因此，null 的类型标签是 0，typeof null 也因此返回 “object”。</p>
+</blockquote>
+<p>再来看下第二个问题，为什么 typeof 返回了一个不在定义范围内的数据类型，经过查阅 ecma262 标准得出了答案，总结如下：</p>
+<ol>
+<li> JavaScript 一切都是对象，而 function 也是 object 的一种。</li>
+<li> 如何区分 function object 还是 normal object，是需要看 object 有没有实现 [[Call]] 这个内置方法，具体<a target="_blank" rel="noopener" href="https://tc39.es/ecma262/#sec-ecmascript-function-objects-call-thisargument-argumentslist">参考</a>。</li>
+<li> typeof 在计算 object 类型时会检查  [[Call]] 内置方法是否被实现，实现了返回 function 没实现则返回 object。</li>
+</ol>
+<table style="margin:0 30%;">
+<tbody>
+  <tr>
+    <th>Type of <var>val</var></th>
+    <th>Result</th>
+  </tr>
+  <tr>
+    <td>Undefined</td>
+    <td><emu-val>"undefined"</emu-val></td>
+  </tr>
+  <tr>
+    <td>Null</td>
+    <td><emu-val>"object"</emu-val></td>
+  </tr>
+  <tr>
+    <td>Boolean</td>
+    <td><emu-val>"boolean"</emu-val></td>
+  </tr>
+  <tr>
+    <td>Number</td>
+    <td><emu-val>"number"</emu-val></td>
+  </tr>
+  <tr>
+    <td>String</td>
+    <td><emu-val>"string"</emu-val></td>
+  </tr>
+  <tr>
+    <td>Symbol</td>
+    <td><emu-val>"symbol"</emu-val></td>
+  </tr>
+  <tr>
+    <td>BigInt</td>
+    <td><emu-val>"bigint"</emu-val></td>
+  </tr>
+  <tr>
+    <td>Object (does not implement [[Call]])</td>
+    <td><emu-val>"object"</emu-val></td>
+  </tr>
+  <tr>
+    <td>Object (implements [[Call]])</td>
+    <td><emu-val>"function"</emu-val></td>
+  </tr>
+</tbody>
+</table>
+
+<h3 id="辨别不同的对象类型"><a href="#辨别不同的对象类型" class="headerlink" title="辨别不同的对象类型"></a>辨别不同的对象类型</h3><p>我们根据 typeof 运算符可以识别基本数据类型，但是 object 对象有很多，比如 Array、Date、Number、Map、Set等等。如何识别这些对象类型靠 typeof 已经无法满足要求，基础扎实的同学还能想到 instanceof 来判断对象实例是不是属于某个类(对象)。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> <span class="title class_">Map</span></span><br><span class="line">a <span class="keyword">instanceof</span> <span class="title class_">Array</span>  <span class="comment">// true</span></span><br><span class="line">b <span class="keyword">instanceof</span> <span class="title class_">Map</span>    <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>这种方法可以对某个类型做具体的判断更为合适，比如判断某个变量是不是数组。不然，每次将不断枚举所有类型执行效率非常低。</p>
+<p>善于学习的同学们肯定发现了可以通过 object.toString() 来判断，比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123; <span class="attr">a</span>: <span class="number">1</span>&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj.<span class="title function_">toString</span>())     <span class="comment">// [object Object]</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Math</span>.<span class="title function_">toString</span>())    <span class="comment">// [object Math]</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">toString</span>())    <span class="comment">// [object JSON]</span></span><br></pre></td></tr></table></figure>
+
+<p>toString 方法都是集成 Object 对象而来，不过有的对象已经将该方法重写，比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Map</span>.<span class="title function_">toString</span>())     <span class="comment">// function Map() &#123; [native code] &#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Date</span>.<span class="title function_">toString</span>())    <span class="comment">// function Date() &#123; [native code] &#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Symbol</span>.<span class="title function_">toString</span>())  <span class="comment">// function Symbol() &#123; [native code] &#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Array</span>.<span class="title function_">toString</span>())   <span class="comment">// function Array() &#123; [native code] &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>所以我们可以直接使用 Object.toString 方法来实现，代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>([])                 <span class="comment">// [object Array]</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(<span class="number">1</span>)                  <span class="comment">// [object Number]</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(<span class="string">&#x27;abc&#x27;</span>)              <span class="comment">// [object String]</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(<span class="literal">true</span>)               <span class="comment">// [object Boolean]</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(<span class="literal">undefined</span>)          <span class="comment">// [object Undefined]</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(<span class="title class_">Symbol</span>(<span class="number">2</span>))          <span class="comment">// [object Symbol]</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(&#123;&#125;)                 <span class="comment">// [object Object]</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(<span class="keyword">new</span> <span class="title class_">Date</span>)           <span class="comment">// [object Date]</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;&#125;)       <span class="comment">// [object Function]</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(<span class="keyword">new</span> <span class="title class_">Set</span>)            <span class="comment">// [object Set]</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(<span class="keyword">new</span> <span class="title class_">Map</span>)            <span class="comment">// [object Map]</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(<span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&#x27;\s&#x27;</span>))   <span class="comment">// [object RegExp]</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(<span class="title class_">Math</span>)               <span class="comment">// [object Math]</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(<span class="keyword">function</span>*()&#123;&#125;)      <span class="comment">// [object GeneratorFunction]</span></span><br></pre></td></tr></table></figure>
+
+<p>这些代码稍微改造就可以直接得到具体的对象类型：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>([]).<span class="title function_">match</span>(<span class="regexp">/(?!\s)\S+(?=])/</span>)[<span class="number">0</span>] <span class="comment">// Array</span></span><br></pre></td></tr></table></figure>
+
+<p>有同学比较好奇 <var>Object.toString</var> 为何如此神通广大，里面到底有什么摩斯密码 :question:</p>
+<p>想弄清楚这个问题就要了解 <var><a target="_blank" rel="noopener" href="https://tc39.es/ecma262/#sec-tostring">Symbol.toStringTag</a></var></p>
+<h3 id="数据类型常见的考查方式有哪些？"><a href="#数据类型常见的考查方式有哪些？" class="headerlink" title="数据类型常见的考查方式有哪些？"></a>数据类型常见的考查方式有哪些？</h3><ol>
+<li> 题目1</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;&#125;       <span class="comment">// object || function ✔️</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="title class_">Function</span>       <span class="comment">// object ✔️ || function</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="title class_">Array</span>          <span class="comment">// object ✔️ || array || function</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">class</span> <span class="title class_">A</span> &#123;&#125;         <span class="comment">// object || function ✔️</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li> 题目2</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="title class_">NaN</span>              <span class="comment">// undefined || null || number ✔️</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="title class_">Infinity</span>         <span class="comment">// undefined || null || number ✔️</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="title class_">Number</span>()     <span class="comment">// number || object ✔️</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="title class_">Number</span>()         <span class="comment">// number ✔️ || object</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li> 题目3</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> (<span class="keyword">typeof</span> <span class="number">1</span>)  <span class="comment">// undefined || string ✔️</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li> 题目4</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> (<span class="keyword">typeof</span> <span class="number">1</span>)  <span class="comment">// undefined || string</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="如何深入理解数据类型转换？"><a href="#如何深入理解数据类型转换？" class="headerlink" title="如何深入理解数据类型转换？"></a>如何深入理解数据类型转换？</h3><ol>
+<li> 初识 Symbol.toStringTag</li>
+<li> 理解 Object.prototype.toString</li>
+<li> 理解 [Instance].prototype.toString</li>
+</ol>
+<ul>
+<li>  <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/118793721">https://zhuanlan.zhihu.com/p/118793721</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%BC%E8%AF%BB"><span class="toc-number">1.</span> <span class="toc-text">导读</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">为什么学习编程语言的数据类型？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript-%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">JavaScript 的数据类型有哪些？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%A8%E5%88%AB%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B"><span class="toc-number"></span> <span class="toc-text">辨别不同的对象类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%B8%B8%E8%A7%81%E7%9A%84%E8%80%83%E6%9F%A5%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">数据类型常见的考查方式有哪些？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">如何深入理解数据类型转换？</span></a>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&text=数据类型"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&title=数据类型"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&is_video=false&description=数据类型"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=数据类型&body=Check out this article: http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&title=数据类型"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&title=数据类型"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&title=数据类型"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&title=数据类型"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&name=数据类型&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/0cfb35c0-49de-11ec-89f9-49447d13d736/&t=数据类型"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2022
+    vc-next
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

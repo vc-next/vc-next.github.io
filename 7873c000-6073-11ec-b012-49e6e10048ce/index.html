@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="JavaScript是运行在浏览器端的且是单线程运行的，为了保障DOM渲染和用户操作不相互阻塞，浏览器内核设计了事件机制。比如用户点击了按钮、填写了表单多是可以通过事件监听到并处理的。当然这些事件有一些是浏览器内置的大家可以开箱即用，也允许开发者自定义事件。 EventTarget 接口DOM 节点的事件的监听和触发都定义在eventTarget接口。很多对象都实现了这个接口，还有一些浏览器内置对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事件处理">
+<meta property="og:url" content="http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="JavaScript是运行在浏览器端的且是单线程运行的，为了保障DOM渲染和用户操作不相互阻塞，浏览器内核设计了事件机制。比如用户点击了按钮、填写了表单多是可以通过事件监听到并处理的。当然这些事件有一些是浏览器内置的大家可以开箱即用，也允许开发者自定义事件。 EventTarget 接口DOM 节点的事件的监听和触发都定义在eventTarget接口。很多对象都实现了这个接口，还有一些浏览器内置对">
+<meta property="og:locale">
+<meta property="og:image" content="https://tse4-mm.cn.bing.net/th/id/OIP-C.1l4OcMdQR8o2vGTSoDt-QAHaFS?pid=ImgDet&rs=1">
+<meta property="og:image" content="https://www.programminghunter.com/images/53/9d/9dfa27801cc26d6a25d8ab9d86fa77d5.png">
+<meta property="article:published_time" content="2021-12-19T02:29:19.000Z">
+<meta property="article:modified_time" content="2022-02-07T12:29:57.421Z">
+<meta property="article:author" content="vc-next">
+<meta property="article:tag" content="javascript css html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tse4-mm.cn.bing.net/th/id/OIP-C.1l4OcMdQR8o2vGTSoDt-QAHaFS?pid=ImgDet&rs=1">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>事件处理</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/e6dad790-6073-11ec-8062-8dea7659a7ab/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/40bc98d0-6073-11ec-b0fa-7939311ba144/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&text=事件处理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&title=事件处理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&is_video=false&description=事件处理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=事件处理&body=Check out this article: http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&title=事件处理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&title=事件处理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&title=事件处理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&title=事件处理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&name=事件处理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&t=事件处理"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#EventTarget-%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.</span> <span class="toc-text">EventTarget 接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">内置事件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">鼠标事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text">键盘事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6-%E5%AF%B9%E8%B1%A1%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.3.</span> <span class="toc-text">框架&#x2F;对象事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A8%E5%8D%95%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.4.</span> <span class="toc-text">表单事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%96%E6%8B%BD%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.5.</span> <span class="toc-text">拖拽事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%AA%E8%B4%B4%E6%9D%BF%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.6.</span> <span class="toc-text">剪贴板事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.7.</span> <span class="toc-text">打印事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E5%AA%92%E4%BD%93%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.8.</span> <span class="toc-text">多媒体事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.9.</span> <span class="toc-text">动画事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%B8%A1%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.10.</span> <span class="toc-text">过渡事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.11.</span> <span class="toc-text">触摸事件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">自定义事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">事件模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1"><span class="toc-number">5.</span> <span class="toc-text">事件对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7"><span class="toc-number">5.1.</span> <span class="toc-text">实例属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="toc-number">5.2.</span> <span class="toc-text">实例方法</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        事件处理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">vc-next</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-12-19T02:29:19.000Z" itemprop="datePublished">2021-12-19</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>JavaScript是运行在浏览器端的且是单线程运行的，为了保障DOM渲染和用户操作不相互阻塞，浏览器内核设计了事件机制。比如用户点击了按钮、填写了表单多是可以通过事件监听到并处理的。当然这些事件有一些是浏览器内置的大家可以开箱即用，也允许开发者自定义事件。</p>
+<h3 id="EventTarget-接口"><a href="#EventTarget-接口" class="headerlink" title="EventTarget 接口"></a>EventTarget 接口</h3><p>DOM 节点的事件的监听和触发都定义在eventTarget接口。很多对象都实现了这个接口，还有一些浏览器内置对象如 XMLHttpRequest 等也实现了该接口，该接口主要提供三个实例方法。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>addEventListener</td>
+<td>绑定事件的监听函数</td>
+</tr>
+<tr>
+<td>removeEventListener</td>
+<td>移除事件的监听函数</td>
+</tr>
+<tr>
+<td>dispatchEvent</td>
+<td>触发事件</td>
+</tr>
+</tbody></table>
+
+    <iframe name="event" module="hexo-eb7d3" frameborder="0" width="100%"></iframe>
+    <script type="text/javascript" id="hexo-eb7d3">
+      (function(){
+        let ifr = document.querySelector('iframe[module=hexo-eb7d3]')
+        const url = URL.createObjectURL(new Blob([unescape("%3C%21DOCTYPE%20html%3E%3Chtml%20lang%3D%22en%22%20dir%3D%22ltr%22%3E%3Chead%3E%0A%20%20%20%20%3Cmeta%20charset%3D%22utf-8%22%3E%0A%20%20%20%20%3Ctitle%3E%u4E8B%u4EF6%u5904%u7406%3C/title%3E%0A%20%20%3C/head%3E%0A%20%20%3Cbody%3E%0A%20%20%20%20%3Csection%20class%3D%22module%20event%22%3E%0A%20%20%20%20%20%20%3Cbutton%20type%3D%22button%22%20name%3D%22button%22%3E%u70B9%u51FB%3C/button%3E%0A%20%20%20%20%20%20%3Cscript%20type%3D%22text/javascript%22%3E%0A%20%20%20%20%20%20%20%20const%20btn%20%3D%20document.querySelector%28%22button%5Bname%3Dbutton%5D%22%29%0A%20%20%20%20%20%20%20%20btn.addEventListener%28%27click%27%2C%20e%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20%20%20console.log%28e.timeStamp%29%0A%20%20%20%20%20%20%20%20%7D%2C%20false%29%0A%20%20%20%20%20%20%3C/script%3E%0A%20%20%20%20%3C/section%3E%0A%20%20%20%20%0A%20%20%0A%3C/body%3E%3C/html%3E")], {
+          type: 'text/html'
+        }))
+        ifr.src = url
+        ifr.onload = function(){
+          ifr.height = ifr.contentDocument.documentElement.offsetHeight
+        }
+        ifr.onresize = function(){
+          ifr.height = ifr.contentDocument.documentElement.offsetHeight
+        }
+        const shell = document.querySelector('#hexo-eb7d3')
+        shell.parentNode.removeChild(shell)
+      })();
+    </script>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">handle</span> = e =&gt; &#123;<span class="attr">s</span>:<span class="number">1</span>&#125;</span><br><span class="line">dom.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>,handle,<span class="literal">false</span>)</span><br><span class="line">dom.<span class="title function_">removeEventListener</span>(<span class="string">&#x27;click&#x27;</span>,handle,<span class="literal">false</span>)</span><br><span class="line">dom.<span class="title function_">dispatchEvent</span>(<span class="keyword">new</span> <span class="title class_">Event</span>(<span class="string">&#x27;click&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+
+    <iframe name="input" module="hexo-a6c2d" frameborder="0" width="100%"></iframe>
+    <script type="text/javascript" id="hexo-a6c2d">
+      (function(){
+        let ifr = document.querySelector('iframe[module=hexo-a6c2d]')
+        const url = URL.createObjectURL(new Blob([unescape("%3C%21DOCTYPE%20html%3E%3Chtml%20lang%3D%22en%22%20dir%3D%22ltr%22%3E%3Chead%3E%0A%20%20%20%20%3Cmeta%20charset%3D%22utf-8%22%3E%0A%20%20%20%20%3Ctitle%3E%u4E8B%u4EF6%u5904%u7406%3C/title%3E%0A%20%20%3C/head%3E%0A%20%20%3Cbody%3E%0A%20%20%20%20%0A%20%20%20%20%3Csection%20class%3D%22module%20input%22%3E%0A%20%20%20%20%20%20%3Cinput%20type%3D%22input%22%20name%3D%22input%22%20placeholder%3D%22%u7528%u6237%u540D%22%20autocomplete%3D%22off%22%3E%0A%20%20%20%20%3C/section%3E%0A%20%20%0A%3C/body%3E%3C/html%3E")], {
+          type: 'text/html'
+        }))
+        ifr.src = url
+        ifr.onload = function(){
+          ifr.height = ifr.contentDocument.documentElement.offsetHeight
+        }
+        ifr.onresize = function(){
+          ifr.height = ifr.contentDocument.documentElement.offsetHeight
+        }
+        const shell = document.querySelector('#hexo-a6c2d')
+        shell.parentNode.removeChild(shell)
+      })();
+    </script>
+
+<p>在此，大家先熟悉这三个接口的使用方法，后续我们会提供一些代码示例。</p>
+<h3 id="内置事件"><a href="#内置事件" class="headerlink" title="内置事件"></a>内置事件</h3><p>事件也称作 DOM 事件，它包括鼠标事件、键盘事件、框架/对象（Frame/Object）事件、表单事件、剪贴板事件、打印事件、拖动事件、多媒体（Media）事件、动画事件、过渡事件等。</p>
+<p><img src="https://tse4-mm.cn.bing.net/th/id/OIP-C.1l4OcMdQR8o2vGTSoDt-QAHaFS?pid=ImgDet&rs=1"></p>
+<blockquote>
+<p>在 HTML 里可以结合 on+event 来绑定事件，浏览器提供了很多内置的事件</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;(event)=&gt;&#123;console.log(event)&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+    <iframe name="event" module="hexo-e4748" frameborder="0" width="100%"></iframe>
+    <script type="text/javascript" id="hexo-e4748">
+      (function(){
+        let ifr = document.querySelector('iframe[module=hexo-e4748]')
+        const url = URL.createObjectURL(new Blob([unescape("%3C%21DOCTYPE%20html%3E%3Chtml%20lang%3D%22en%22%20dir%3D%22ltr%22%3E%3Chead%3E%0A%20%20%20%20%3Cmeta%20charset%3D%22utf-8%22%3E%0A%20%20%20%20%3Ctitle%3E%u4E8B%u4EF6%u5904%u7406%3C/title%3E%0A%20%20%3C/head%3E%0A%20%20%3Cbody%3E%0A%20%20%20%20%3Csection%20class%3D%22module%20event%22%3E%0A%20%20%20%20%20%20%3Cbutton%20type%3D%22button%22%20name%3D%22button%22%3E%u70B9%u51FB%3C/button%3E%0A%20%20%20%20%20%20%3Cscript%20type%3D%22text/javascript%22%3E%0A%20%20%20%20%20%20%20%20const%20btn%20%3D%20document.querySelector%28%22button%5Bname%3Dbutton%5D%22%29%0A%20%20%20%20%20%20%20%20btn.addEventListener%28%27click%27%2C%20e%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20%20%20console.log%28e.timeStamp%29%0A%20%20%20%20%20%20%20%20%7D%2C%20false%29%0A%20%20%20%20%20%20%3C/script%3E%0A%20%20%20%20%3C/section%3E%0A%20%20%20%20%0A%20%20%0A%3C/body%3E%3C/html%3E")], {
+          type: 'text/html'
+        }))
+        ifr.src = url
+        ifr.onload = function(){
+          ifr.height = ifr.contentDocument.documentElement.offsetHeight
+        }
+        ifr.onresize = function(){
+          ifr.height = ifr.contentDocument.documentElement.offsetHeight
+        }
+        const shell = document.querySelector('#hexo-e4748')
+        shell.parentNode.removeChild(shell)
+      })();
+    </script>
+
+<h4 id="鼠标事件"><a href="#鼠标事件" class="headerlink" title="鼠标事件"></a>鼠标事件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)           <span class="comment">// 当用户点击某个对象时调用的事件句柄</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;dblclick&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)        <span class="comment">// 当用户双击某个对象时调用的事件句柄</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;contextmenu&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)     <span class="comment">// 在用户点击鼠标右键打开上下文菜单时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;mousedown&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)       <span class="comment">// 鼠标按钮被按下</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;mousemove&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)       <span class="comment">// 鼠标被移动</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;mouseenter&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)      <span class="comment">// 当鼠标指针移动到元素上时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;mouseover&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)       <span class="comment">// 鼠标移到某元素之上</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;mouseout&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)        <span class="comment">// 鼠标从某元素移开</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;mouseup&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)         <span class="comment">// 鼠标按键被松开</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;mouseleave&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)      <span class="comment">// 当鼠标指针移出元素时触发</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="键盘事件"><a href="#键盘事件" class="headerlink" title="键盘事件"></a>键盘事件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;keydown&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)         <span class="comment">// 某个键盘按键被按下</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;keyup&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)           <span class="comment">// 某个键盘按键被松开</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;keypress&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)        <span class="comment">// 某个键盘按键被按下并松开</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="框架-对象事件"><a href="#框架-对象事件" class="headerlink" title="框架/对象事件"></a>框架/对象事件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;abort&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)           <span class="comment">// 图像的加载被中断 &lt;object&gt;</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;beforeunload&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)    <span class="comment">// 该事件在即将离开页面（刷新或关闭）时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;error&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)           <span class="comment">// 在加载文档或图像时发生错误 &lt;object&gt;, &lt;body&gt;和 &lt;frameset&gt;</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;hashchange&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)      <span class="comment">// 该事件在当前 URL 的锚部分发生修改时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;load&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)            <span class="comment">// 一张页面或一幅图像完成加载</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;pageshow&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)        <span class="comment">// 该事件在用户访问页面时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;pagehide&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)        <span class="comment">// 该事件在用户离开当前网页跳转到另外一个页面时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;resize&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)          <span class="comment">// 窗口或框架被重新调整大小</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;scroll&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)          <span class="comment">// 当文档被滚动时发生的事件</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;unload&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)          <span class="comment">// 用户退出页面。 ( &lt;body&gt; 和 &lt;frameset&gt;)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="表单事件"><a href="#表单事件" class="headerlink" title="表单事件"></a>表单事件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;input&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)           <span class="comment">// 元素获取用户输入时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;select&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)          <span class="comment">// 用户选取文本时触发 ( &lt;input&gt; 和 &lt;textarea&gt;)</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;change&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)          <span class="comment">// 该事件在表单元素的内容改变时触发( &lt;input&gt;, &lt;keygen&gt;, &lt;select&gt;, 和 &lt;textarea&gt;)</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;focus&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)           <span class="comment">// 元素获取焦点时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;reset&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)           <span class="comment">// 表单重置时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;submit&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)          <span class="comment">// 表单提交时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;blur&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)            <span class="comment">// 元素失去焦点时触发</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="拖拽事件"><a href="#拖拽事件" class="headerlink" title="拖拽事件"></a>拖拽事件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;dragstart&#x27;</span>, <span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)      <span class="comment">// 该事件在用户开始拖动元素时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;drag&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)            <span class="comment">// 该事件在元素正在拖动时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;dragend&#x27;</span>, <span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)        <span class="comment">// 该事件在用户完成元素的拖动时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;dragover&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)        <span class="comment">// 该事件在拖动元素在放置目标上时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;dragenter&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)       <span class="comment">// 该事件在拖动的元素进入放置目标时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;dragleave&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)       <span class="comment">// 该事件在拖动元素离开放置目标时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;drop&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)            <span class="comment">// 该事件在拖动元素放置在目标区域时触发</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="剪贴板事件"><a href="#剪贴板事件" class="headerlink" title="剪贴板事件"></a>剪贴板事件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;copy&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)            <span class="comment">// 该事件在用户拷贝元素内容时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;cut&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)             <span class="comment">// 该事件在用户剪切元素内容时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;paste&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)           <span class="comment">// 该事件在用户粘贴元素内容时触发</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例展示</span></span><br><span class="line"><span class="keyword">const</span> content = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.content&#x27;</span>)</span><br><span class="line">content.<span class="title function_">addeventListener</span>(<span class="string">&#x27;copy&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> selection = <span class="variable language_">document</span>.<span class="title function_">getSelection</span>();</span><br><span class="line">  event.<span class="property">clipboardData</span>.<span class="title function_">setData</span>(<span class="string">&#x27;text/plain&#x27;</span>, selection.<span class="title function_">toString</span>().<span class="title function_">toUpperCase</span>());</span><br><span class="line">  event.<span class="title function_">preventDefault</span>();</span><br><span class="line">  <span class="comment">// Clipboardevent &#123;isTrusted: true, clipboardData: DataTransfer, type: &#x27;copy&#x27;, target: p, currentTarget: div.content, …&#125;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="打印事件"><a href="#打印事件" class="headerlink" title="打印事件"></a>打印事件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;afterprint&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)      <span class="comment">// 该事件在页面已经开始打印，或者打印窗口已经关闭时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;beforeprint&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)     <span class="comment">// 该事件在页面即将开始打印时触发</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="多媒体事件"><a href="#多媒体事件" class="headerlink" title="多媒体事件"></a>多媒体事件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;abort&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)           <span class="comment">// 事件在视频/音频（audio/video）终止加载时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;anplay&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)          <span class="comment">// 事件在用户可以开始播放视频/音频（audio/video）时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;canplaythrough&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)  <span class="comment">// 事件在视频/音频（audio/video）可以正常播放且无需停顿和缓冲时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;durationchange&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)  <span class="comment">// 事件在视频/音频（audio/video）的时长发生变化时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;ended&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)           <span class="comment">// 事件在视频/音频（audio/video）播放结束时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;error&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)           <span class="comment">// 事件在视频/音频（audio/video）数据加载期间发生错误时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;loadeddata&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)      <span class="comment">// 事件在浏览器加载视频/音频（audio/video）当前帧时触发触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;loadedmetadata&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)  <span class="comment">// 事件在浏览器加载视频/音频（audio/video）当前帧时触发触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;pause&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)           <span class="comment">// 事件在视频/音频（audio/video）暂停时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;play&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)            <span class="comment">// 事件在视频/音频（audio/video）开始播放时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;timeupdate&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)      <span class="comment">// 事件在当前的播放位置发送改变时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;volumechange&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)    <span class="comment">// 事件在音量发生改变时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;seeked&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)          <span class="comment">// 事件在用户重新定位视频/音频（audio/video）的播放位置后触发</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="动画事件"><a href="#动画事件" class="headerlink" title="动画事件"></a>动画事件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;animationend&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)          <span class="comment">// 该事件在 CSS 动画结束播放时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;animationiteration&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)    <span class="comment">// 该事件在 CSS 动画重复播放时触发</span></span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;animationstart&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)        <span class="comment">// 该事件在 CSS 动画开始播放时触发</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="过渡事件"><a href="#过渡事件" class="headerlink" title="过渡事件"></a>过渡事件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;transitionend&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)     <span class="comment">// 该事件在 CSS 完成过渡后触发</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="触摸事件"><a href="#触摸事件" class="headerlink" title="触摸事件"></a>触摸事件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&quot;touchstart&quot;</span>, <span class="function"><span class="params">e</span> =&gt;</span>&#123;&#125;, <span class="literal">false</span>)</span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&quot;touchend&quot;</span>, <span class="function"><span class="params">e</span> =&gt;</span>&#123;&#125;, <span class="literal">false</span>)</span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&quot;touchmove&quot;</span>, <span class="function"><span class="params">e</span> =&gt;</span>&#123;&#125;, <span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h3><p><strong>1. new event</strong></p>
+<p>此 event 是 event 但非 event，event 是根也是魂。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ev = <span class="keyword">new</span> <span class="title function_">event</span>(<span class="string">&#x27;click&#x27;</span>)</span><br><span class="line">dom.<span class="title function_">dispatchevent</span>(ev)</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. new Customevent</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ev = <span class="keyword">new</span> <span class="title class_">Customevent</span>(<span class="string">&#x27;click&#x27;</span>,&#123;<span class="attr">detail</span>:&#123;&#125;&#125;)</span><br><span class="line">dom.<span class="title function_">dispatchevent</span>()</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. dispatchevent</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dom.<span class="title function_">dispatchevent</span>(<span class="keyword">new</span> <span class="title class_">Customevent</span>(<span class="string">&#x27;click&#x27;</span>))</span><br><span class="line">dom.<span class="title function_">dispatchevent</span>(<span class="keyword">new</span> <span class="title function_">event</span>(<span class="string">&#x27;click&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p><strong>4. addeventListener</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;,<span class="literal">false</span>)</span><br><span class="line">dom.<span class="title function_">addeventListener</span>(<span class="string">&#x27;input&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;,<span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>5. removeeventListener</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dom.<span class="title function_">removeeventListener</span>(<span class="string">&#x27;mouseleave&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="事件模型"><a href="#事件模型" class="headerlink" title="事件模型"></a>事件模型</h3><p>三个阶段：事件捕获阶段、目标阶段、事件冒泡阶段。</p>
+<p><img src="https://www.programminghunter.com/images/53/9d/9dfa27801cc26d6a25d8ab9d86fa77d5.png"><br><a target="_blank" rel="noopener" href="https://pic2.zhimg.com/v2-9fd169cac0137e94d76ff9d7da7166bc_1440w.jpg?source=172ae18b"></a></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span> <span class="attr">dir</span>=<span class="string">&quot;ltr&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span>123<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;window-captrue&#x27;</span>)&#125;,<span class="literal">true</span>)</span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;window-bubbles&#x27;</span>)&#125;,<span class="literal">false</span>)</span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;document-captrue&#x27;</span>)&#125;,<span class="literal">true</span>)</span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;document-bubbles&#x27;</span>)&#125;,<span class="literal">false</span>)</span><br><span class="line"><span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;html-captrue&#x27;</span>)&#125;,<span class="literal">true</span>)</span><br><span class="line"><span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;html-bubbles&#x27;</span>)&#125;,<span class="literal">false</span>)</span><br><span class="line"><span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;body-captrue&#x27;</span>)&#125;,<span class="literal">true</span>)</span><br><span class="line"><span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;body-bubbles&#x27;</span>)&#125;,<span class="literal">false</span>)</span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;div&#x27;</span>).<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;div-captrue&#x27;</span>)&#125;,<span class="literal">true</span>)</span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;div&#x27;</span>).<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;div-bubbles&#x27;</span>)&#125;,<span class="literal">false</span>)</span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;p&#x27;</span>).<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;p-captrue&#x27;</span>)&#125;,<span class="literal">true</span>)</span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;p&#x27;</span>).<span class="title function_">addeventListener</span>(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;p-bubbles&#x27;</span>)&#125;,<span class="literal">false</span>)</span><br><span class="line"><span class="comment">// html-captrue</span></span><br><span class="line"><span class="comment">// body-captrue</span></span><br><span class="line"><span class="comment">// div-captrue</span></span><br><span class="line"><span class="comment">// p-captrue</span></span><br><span class="line"><span class="comment">// p-bubbles</span></span><br><span class="line"><span class="comment">// div-bubbles</span></span><br><span class="line"><span class="comment">// body-bubbles</span></span><br><span class="line"><span class="comment">// html-bubbles</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h3><p>事件发生以后，会产生一个事件对象，作为参数传给监听函数。浏览器原生提供一个event对象，所有的事件都是这个对象的实例，或者说继承了event.prototype对象。event对象本身就是一个构造函数，可以用来生成新的实例。event构造函数接受两个参数。第一个参数type是字符串，表示事件的名称；第二个参数options是一个对象，表示事件对象的配置。该对象主要有下面两个属性。</p>
+<p>bubbles：布尔值，可选，默认为false，表示事件对象是否冒泡。<br>cancelable：布尔值，可选，默认为false，表示事件是否可以被取消，即能否用event.preventDefault()取消这个事件。一旦事件被取消，就好像从来没有发生过，不会触发浏览器对该事件的默认行为。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ev = <span class="keyword">new</span> <span class="title function_">event</span>(<span class="string">&#x27;click&#x27;</span>,&#123;</span><br><span class="line">  <span class="string">&#x27;bubbles&#x27;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="string">&#x27;cancelable&#x27;</span>: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line">dom.<span class="title function_">dispatchevent</span>(ev)</span><br></pre></td></tr></table></figure>
+
+<h4 id="实例属性"><a href="#实例属性" class="headerlink" title="实例属性"></a>实例属性</h4><table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">bubbles</td>
+<td>true/false</td>
+<td>表示当前事件是否会冒泡。该属性为只读属性，一般用来了解 event 实例是否可以冒泡</td>
+</tr>
+<tr>
+<td align="center">eventPhase</td>
+<td>0/1/2/3</td>
+<td>eventPhase属性返回一个整数常量，表示事件目前所处的阶段:事件目前没有发生、事件目前处于捕获阶段、事件到达目标节点、事件处于冒泡阶段</td>
+</tr>
+<tr>
+<td align="center">cancelable</td>
+<td>true/false</td>
+<td>表示事件是否可以取消</td>
+</tr>
+<tr>
+<td align="center">cancelBubble</td>
+<td>true/false</td>
+<td>相当于执行 event.stopPropagation()</td>
+</tr>
+<tr>
+<td align="center">currentTarget</td>
+<td>DOM</td>
+<td>事件当前正在通过的节</td>
+</tr>
+<tr>
+<td align="center">target</td>
+<td>DOM</td>
+<td>事件的原始触发节点（event.target）</td>
+</tr>
+<tr>
+<td align="center">type</td>
+<td>String</td>
+<td>表示事件类型</td>
+</tr>
+<tr>
+<td align="center">timeStamp</td>
+<td>毫秒时间戳</td>
+<td>表示事件发生的时间,它是相对于网页加载成功开始计算的</td>
+</tr>
+<tr>
+<td align="center">isTrusted</td>
+<td>true/false</td>
+<td>表示该事件是否由真实的用户行为产生</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ev = <span class="keyword">new</span> <span class="title class_">Event</span>(<span class="string">&#x27;click&#x27;</span>);</span><br><span class="line">ev.<span class="property">type</span> <span class="comment">// &quot;click&quot;</span></span><br><span class="line">ev.<span class="property">eventPhase</span> <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="实例方法"><a href="#实例方法" class="headerlink" title="实例方法"></a>实例方法</h4><table>
+<thead>
+<tr>
+<th>方法/属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>preventDefault()</td>
+<td>方法取消浏览器对当前事件的默认行为。比如点击链接后，浏览器默认会跳转到另一个页面，使用这个方法以后，就不会跳转了</td>
+</tr>
+<tr>
+<td>stopPropagation()</td>
+<td>阻止事件在 DOM 中继续传播，防止再触发定义在别的节点上的监听函数，但是不包括在当前节点上其他的事件监听函数</td>
+</tr>
+<tr>
+<td>stopImmediatePropagation()</td>
+<td>阻止同一个事件的其他监听函数被调用，不管监听函数定义在当前节点还是其他节点</td>
+</tr>
+<tr>
+<td>composedPath()</td>
+<td>返回一个数组，成员是事件的最底层节点和依次冒泡经过的所有上层节点</td>
+</tr>
+<tr>
+<td>eventPhase</td>
+<td>属性返回一个整数常量，表示事件目前所处的阶段。该属性只读，</td>
+</tr>
+<tr>
+<td>bubbless</td>
+<td>属性返回一个布尔值，表示当前事件是否会冒泡</td>
+</tr>
+<tr>
+<td>cancelable</td>
+<td>属性返回一个布尔值，表示事件是否可以取消</td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://wangdoc.com/javascript/events/event.html"></a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#EventTarget-%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.</span> <span class="toc-text">EventTarget 接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">内置事件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">鼠标事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text">键盘事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6-%E5%AF%B9%E8%B1%A1%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.3.</span> <span class="toc-text">框架&#x2F;对象事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A8%E5%8D%95%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.4.</span> <span class="toc-text">表单事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%96%E6%8B%BD%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.5.</span> <span class="toc-text">拖拽事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%AA%E8%B4%B4%E6%9D%BF%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.6.</span> <span class="toc-text">剪贴板事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.7.</span> <span class="toc-text">打印事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E5%AA%92%E4%BD%93%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.8.</span> <span class="toc-text">多媒体事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.9.</span> <span class="toc-text">动画事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%B8%A1%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.10.</span> <span class="toc-text">过渡事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.11.</span> <span class="toc-text">触摸事件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">自定义事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">事件模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1"><span class="toc-number">5.</span> <span class="toc-text">事件对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7"><span class="toc-number">5.1.</span> <span class="toc-text">实例属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="toc-number">5.2.</span> <span class="toc-text">实例方法</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&text=事件处理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&title=事件处理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&is_video=false&description=事件处理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=事件处理&body=Check out this article: http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&title=事件处理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&title=事件处理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&title=事件处理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&title=事件处理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&name=事件处理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/7873c000-6073-11ec-b012-49e6e10048ce/&t=事件处理"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2022
+    vc-next
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

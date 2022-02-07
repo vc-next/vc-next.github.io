@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="new XMLHttpRequest   灵活的 http 请求构造器     status   error   timeout   formData   request&#x2F;response   sync&#x2F;async  最基本的 HTTP 请求代码片段 1234567const xhr &#x3D; new XMLHttpRequest()xhr.timeout &#x3D; 1000xhr.addEventLis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据请求">
+<meta property="og:url" content="http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="new XMLHttpRequest   灵活的 http 请求构造器     status   error   timeout   formData   request&#x2F;response   sync&#x2F;async  最基本的 HTTP 请求代码片段 1234567const xhr &#x3D; new XMLHttpRequest()xhr.timeout &#x3D; 1000xhr.addEventLis">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-12-19T02:32:25.000Z">
+<meta property="article:modified_time" content="2022-01-08T11:13:08.923Z">
+<meta property="article:author" content="vc-next">
+<meta property="article:tag" content="javascript css html">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>数据请求</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/9ba4ea40-6096-11ec-8aec-5da075fe55e4/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/7873c000-6073-11ec-b012-49e6e10048ce/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&text=数据请求"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&title=数据请求"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&is_video=false&description=数据请求"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=数据请求&body=Check out this article: http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&title=数据请求"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&title=数据请求"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&title=数据请求"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&title=数据请求"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&name=数据请求&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&t=数据请求"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        数据请求
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">vc-next</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-12-19T02:32:25.000Z" itemprop="datePublished">2021-12-19</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <ol>
+<li> <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000004322487">new XMLHttpRequest</a></li>
+</ol>
+<blockquote>
+<p>灵活的 http 请求构造器</p>
+</blockquote>
+<ul>
+<li>  status</li>
+<li>  error</li>
+<li>  timeout</li>
+<li>  formData</li>
+<li>  request/response</li>
+<li>  sync/async</li>
+</ul>
+<p>最基本的 HTTP 请求代码片段</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line">xhr.<span class="property">timeout</span> = <span class="number">1000</span></span><br><span class="line">xhr.<span class="title function_">addEventListener</span>(<span class="string">&quot;load&quot;</span>, <span class="keyword">function</span> <span class="title function_">onload</span>(<span class="params"></span>)&#123;&#125;)</span><br><span class="line">xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;error&#x27;</span>,<span class="keyword">function</span> <span class="title function_">onerror</span>(<span class="params"></span>)&#123;&#125;)</span><br><span class="line">xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;timeout&#x27;</span>,<span class="keyword">function</span> <span class="title function_">ontimeout</span>(<span class="params"></span>)&#123;&#125;)</span><br><span class="line">xhr.<span class="title function_">open</span>(<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;https://www.example.org/example.txt&quot;</span>,<span class="literal">true</span>)</span><br><span class="line">xhr.<span class="title function_">send</span>()</span><br></pre></td></tr></table></figure>
+
+<p>结合 <a target="_blank" rel="noopener" href="https://zh.javascript.info/formdata">formData</a> 发送数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line"><span class="keyword">const</span> data = <span class="keyword">new</span> <span class="title class_">FormData</span>()</span><br><span class="line">data.<span class="title function_">set</span>(<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;10001&#x27;</span>)</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&#x27;name&#x27;</span>,<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&#x27;addr&#x27;</span>,<span class="string">&#x27;test world&#x27;</span>)</span><br><span class="line">xhr.<span class="property">timeout</span> = <span class="number">1000</span></span><br><span class="line">xhr.<span class="title function_">addEventListener</span>(<span class="string">&quot;load&quot;</span>, <span class="keyword">function</span> <span class="title function_">onload</span>(<span class="params"></span>)&#123;&#125;)</span><br><span class="line">xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;error&#x27;</span>,<span class="keyword">function</span> <span class="title function_">onerror</span>(<span class="params"></span>)&#123;&#125;)</span><br><span class="line">xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;timeout&#x27;</span>,<span class="keyword">function</span> <span class="title function_">ontimeout</span>(<span class="params"></span>)&#123;&#125;)</span><br><span class="line">xhr.<span class="title function_">open</span>(<span class="string">&quot;POST&quot;</span>, <span class="string">&quot;https://www.example.org/example.txt&quot;</span>,<span class="literal">true</span>)</span><br><span class="line">xhr.<span class="title function_">send</span>(data)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  在哪可以看到 formData 数据，在 network的 可以查看请求有个 Content-Type: multipart/form-data; boundary=—-WebKitFormBoundary4QTU9gLJlwuu2vTn，然后在 PayLoad 可以看到对应的 formData 数据</li>
+<li>  formData 必须是 POST 方式</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">------WebKitFormBoundary4QTU9gLJlwuu2vTn</span><br><span class="line">Content-Disposition: form-data; name=&quot;id&quot;</span><br><span class="line"></span><br><span class="line">10001</span><br><span class="line">------WebKitFormBoundary4QTU9gLJlwuu2vTn</span><br><span class="line">Content-Disposition: form-data; name=&quot;name&quot;</span><br><span class="line"></span><br><span class="line">hello world</span><br><span class="line">------WebKitFormBoundary4QTU9gLJlwuu2vTn</span><br><span class="line">Content-Disposition: form-data; name=&quot;addr&quot;</span><br><span class="line"></span><br><span class="line">test world</span><br><span class="line">------WebKitFormBoundary4QTU9gLJlwuu2vTn--</span><br></pre></td></tr></table></figure>
+
+<p>Node Koa framework 的中间件 @koa/multer 支持 formData 解析</p>
+<ol start="2">
+<li> <a target="_blank" rel="noopener" href="https://zh.javascript.info/fetch">Fetch</a></li>
+</ol>
+<p>header、response、request</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;http://example.com/movies.json&#x27;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">response</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> response.<span class="title function_">json</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">myJson</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(myJson);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  header</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> content = <span class="string">&#x27;Hello World&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> myHeaders = <span class="keyword">new</span> <span class="title class_">Headers</span>();</span><br><span class="line">myHeaders.<span class="title function_">append</span>(<span class="string">&#x27;Content-Type&#x27;</span>, <span class="string">&#x27;text/plain&#x27;</span>);</span><br><span class="line">myHeaders.<span class="title function_">append</span>(<span class="string">&#x27;Content-Length&#x27;</span>, content.<span class="property">length</span>.<span class="title function_">toString</span>());</span><br><span class="line">myHeaders.<span class="title function_">append</span>(<span class="string">&#x27;X-Custom-Header&#x27;</span>, <span class="string">&#x27;ProcessThisImmediately&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  request</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> myHeaders = <span class="keyword">new</span> <span class="title class_">Headers</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> myRequest = <span class="keyword">new</span> <span class="title class_">Request</span>(<span class="string">&#x27;flowers.jpg&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">  <span class="attr">headers</span>: myHeaders,</span><br><span class="line">  <span class="attr">mode</span>: <span class="string">&#x27;cors&#x27;</span>,</span><br><span class="line">  <span class="attr">cache</span>: <span class="string">&#x27;default&#x27;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">fetch</span>(myRequest)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> response.<span class="title function_">blob</span>())</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">myBlob</span> =&gt;</span> &#123;</span><br><span class="line">    myImage.<span class="property">src</span> = <span class="variable constant_">URL</span>.<span class="title function_">createObjectURL</span>(myBlob);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  response</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> myBody = <span class="keyword">new</span> <span class="title class_">Blob</span>();</span><br><span class="line"></span><br><span class="line"><span class="title function_">addEventListener</span>(<span class="string">&#x27;fetch&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// ServiceWorker intercepting a fetch</span></span><br><span class="line">  event.<span class="title function_">respondWith</span>(</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Response</span>(myBody, &#123;</span><br><span class="line">      <span class="attr">headers</span>: &#123; <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;text/plain&#x27;</span> &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  fetch的取消比较隐蔽，但可以借助 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/AbortController/abort">AbortController.abort()</a></li>
+<li>  Response 提供了多种基于 promise 的方法，来以不同的格式访问 body,我们只能选择一种读取 body 的方法</li>
+</ul>
+<ol start="3">
+<li> new Image</li>
+</ol>
+<ul>
+<li>  单点发送</li>
+<li>  不需要挂载 DOM</li>
+<li>  回调简单</li>
+<li>  async</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> logger = <span class="keyword">new</span> <span class="title class_">Image</span>()</span><br><span class="line">logger.<span class="property">src</span> = <span class="string">&#x27;https://abc.com/trace?name=id&amp;time=2022&#x27;</span></span><br><span class="line">logger.<span class="property">onload</span> = <span class="function"><span class="params">e</span> =&gt;</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li> JSONP</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      receive <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;qwerty&quot;</span>&gt;</span> <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">callfun</span>(<span class="params">data</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;qwerty&#x27;</span>).<span class="property">innerHTML</span> = data;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://127.0.0.1:10010/js?call=callfun&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Controller</span> = <span class="built_in">require</span>(<span class="string">&#x27;egg&#x27;</span>).<span class="property">Controller</span>;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">JsonpController</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Controller</span> &#123;</span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">index</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; ctx &#125; = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(ctx.<span class="property">query</span>);</span><br><span class="line">    ctx.<span class="title function_">set</span>(<span class="string">&#x27;content-type&#x27;</span>, <span class="string">&#x27;text/javascript&#x27;</span>);</span><br><span class="line">    ctx.<span class="property">body</span> = ctx.<span class="property">query</span>.<span class="property">call</span> + <span class="string">&#x27;(&quot;nihao&quot;)&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li> window.location.href</li>
+<li> window.open</li>
+<li> form.submit</li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&text=数据请求"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&title=数据请求"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&is_video=false&description=数据请求"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=数据请求&body=Check out this article: http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&title=数据请求"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&title=数据请求"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&title=数据请求"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&title=数据请求"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&name=数据请求&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/e6dad790-6073-11ec-8062-8dea7659a7ab/&t=数据请求"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2022
+    vc-next
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
