@@ -1,0 +1,8 @@
+lockfileVersion: 5.3
+
+specifiers:
+  hexo-plugin-cli: ^1.0.0
+  hexo-plugin-showcase: ^1.0.1
+
+dependencies:
+  hexo-plugin-showcase: link:../../../hexo-plugin-showcase

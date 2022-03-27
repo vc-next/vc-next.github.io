@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>EventTarget</title>
+  </head>
+  <body>
+    <section class="module input">
+      <ul class="list">
+        <li>list</li>
+      </ul>
+      <script type="text/javascript">
+        class List extends EventTarget {
+          constructor() {
+            super()
+            this.root = document.querySelector('.list')
+            this.data = new Set()
+            this.addEventListener('add', e => {
+              let li = ''
+              this.data.add(e.detail.key)
+              for (let v of this.data.values()) {
+                li += `<li>${v}</li>`
+              }
+              this.root.innerHTML = li
+            }, false)
+          }
+        }
+        const d = new List
+        let t = 0
+        const timer = setInterval(() => {
+          d.dispatchEvent(new CustomEvent('add', {
+            detail: {
+              key: (Math.random() * 100).toLocaleString('en-IN', {maximumSignificantDigits: 3})
+            }
+          }))
+          t++
+          if (t > 20) {
+            clearInterval(timer)
+          }
+        }, 1000)
+      </script>
+    </section>
+  </body>
+</html>

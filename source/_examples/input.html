@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>input invalid</title>
+  </head>
+  <body>
+    <form id="form">
+      <input id="field" type="text" pattern="[a-f,0-9]{4}" autocomplete="off">
+    </form>
+    <script type="text/javascript">
+      const form = document.querySelector('#form');
+      const field = document.querySelector('#field');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault(); // 防止这个例子发出 POST 请求
+      });
+      field.oninvalid = (event) => {
+        event.target.setCustomValidity('必须是一个 4 位十六进制数');
+      }
+      field.oninput = (event) => {
+        event.target.setCustomValidity('');
+      }
+    </script>
+  </body>
+</html>
